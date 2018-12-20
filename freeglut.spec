@@ -4,16 +4,18 @@
 #
 Name     : freeglut
 Version  : 3.0.0
-Release  : 8
-URL      : http://downloads.sourceforge.net/project/freeglut/freeglut/3.0.0/freeglut-3.0.0.tar.gz
-Source0  : http://downloads.sourceforge.net/project/freeglut/freeglut/3.0.0/freeglut-3.0.0.tar.gz
+Release  : 9
+URL      : https://sourceforge.net/projects/freeglut/files/freeglut/3.0.0/freeglut-3.0.0.tar.gz
+Source0  : https://sourceforge.net/projects/freeglut/files/freeglut/3.0.0/freeglut-3.0.0.tar.gz
 Summary  : A freely licensed and improved alternative to the GLUT library
 Group    : Development/Tools
 License  : MIT
-Requires: freeglut-lib
-BuildRequires : cmake
+Requires: freeglut-lib = %{version}-%{release}
+Requires: freeglut-license = %{version}-%{release}
+BuildRequires : buildreq-cmake
 BuildRequires : glu-dev
-BuildRequires : libXi-dev
+BuildRequires : libX11-dev libICE-dev libSM-dev libXau-dev libXcomposite-dev libXcursor-dev libXdamage-dev libXdmcp-dev libXext-dev libXfixes-dev libXft-dev libXi-dev libXinerama-dev libXi-dev libXmu-dev libXpm-dev libXrandr-dev libXrender-dev libXres-dev libXScrnSaver-dev libXt-dev libXtst-dev libXv-dev libXxf86misc-dev libXxf86vm-dev
+BuildRequires : mesa-dev
 
 %description
 BRIEF OVERVIEW
@@ -27,8 +29,8 @@ with or without modifications (see COPYING for details).
 %package dev
 Summary: dev components for the freeglut package.
 Group: Development
-Requires: freeglut-lib
-Provides: freeglut-devel
+Requires: freeglut-lib = %{version}-%{release}
+Provides: freeglut-devel = %{version}-%{release}
 
 %description dev
 dev components for the freeglut package.
@@ -37,23 +39,40 @@ dev components for the freeglut package.
 %package lib
 Summary: lib components for the freeglut package.
 Group: Libraries
+Requires: freeglut-license = %{version}-%{release}
 
 %description lib
 lib components for the freeglut package.
+
+
+%package license
+Summary: license components for the freeglut package.
+Group: Default
+
+%description license
+license components for the freeglut package.
 
 
 %prep
 %setup -q -n freeglut-3.0.0
 
 %build
-mkdir clr-build
+export http_proxy=http://127.0.0.1:9/
+export https_proxy=http://127.0.0.1:9/
+export no_proxy=localhost,127.0.0.1,0.0.0.0
+export LANG=C
+export SOURCE_DATE_EPOCH=1545332249
+mkdir -p clr-build
 pushd clr-build
-cmake .. -G "Unix Makefiles" -DCMAKE_INSTALL_PREFIX=/usr -DBUILD_SHARED_LIBS:BOOL=ON -DLIB_INSTALL_DIR:PATH=%{_libdir}
-make V=1  %{?_smp_mflags}
+%cmake ..
+make  %{?_smp_mflags} VERBOSE=1
 popd
 
 %install
+export SOURCE_DATE_EPOCH=1545332249
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/package-licenses/freeglut
+cp COPYING %{buildroot}/usr/share/package-licenses/freeglut/COPYING
 pushd clr-build
 %make_install
 popd
@@ -67,9 +86,14 @@ popd
 /usr/include/GL/freeglut_ext.h
 /usr/include/GL/freeglut_std.h
 /usr/include/GL/glut.h
-/usr/lib64/*.so
-/usr/lib64/pkgconfig/*.pc
+/usr/lib64/libglut.so
+/usr/lib64/pkgconfig/freeglut.pc
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/*.so.*
+/usr/lib64/libglut.so.3
+/usr/lib64/libglut.so.3.10.0
+
+%files license
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/freeglut/COPYING
