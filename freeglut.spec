@@ -4,10 +4,10 @@
 #
 Name     : freeglut
 Version  : 3.0.0
-Release  : 9
+Release  : 10
 URL      : https://sourceforge.net/projects/freeglut/files/freeglut/3.0.0/freeglut-3.0.0.tar.gz
 Source0  : https://sourceforge.net/projects/freeglut/files/freeglut/3.0.0/freeglut-3.0.0.tar.gz
-Summary  : A freely licensed and improved alternative to the GLUT library
+Summary  : Provides functionality for small OpenGL programs
 Group    : Development/Tools
 License  : MIT
 Requires: freeglut-lib = %{version}-%{release}
@@ -31,6 +31,8 @@ Summary: dev components for the freeglut package.
 Group: Development
 Requires: freeglut-lib = %{version}-%{release}
 Provides: freeglut-devel = %{version}-%{release}
+Requires: freeglut = %{version}-%{release}
+Requires: freeglut = %{version}-%{release}
 
 %description dev
 dev components for the freeglut package.
@@ -61,15 +63,19 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1545332249
+export SOURCE_DATE_EPOCH=1559829814
 mkdir -p clr-build
 pushd clr-build
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$CFLAGS -fno-lto "
+export FFLAGS="$CFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 %cmake ..
-make  %{?_smp_mflags} VERBOSE=1
+make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1545332249
+export SOURCE_DATE_EPOCH=1559829814
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/freeglut
 cp COPYING %{buildroot}/usr/share/package-licenses/freeglut/COPYING
