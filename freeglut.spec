@@ -4,7 +4,7 @@
 #
 Name     : freeglut
 Version  : 3.2.1
-Release  : 15
+Release  : 16
 URL      : https://sourceforge.net/projects/freeglut/files/freeglut/3.2.1/freeglut-3.2.1.tar.gz
 Source0  : https://sourceforge.net/projects/freeglut/files/freeglut/3.2.1/freeglut-3.2.1.tar.gz
 Summary  : A freely licensed and improved alternative to the GLUT library
