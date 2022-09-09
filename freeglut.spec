@@ -4,7 +4,7 @@
 #
 Name     : freeglut
 Version  : 3.2.2
-Release  : 23
+Release  : 24
 URL      : https://sourceforge.net/projects/freeglut/files/freeglut/3.2.2/freeglut-3.2.2.tar.gz
 Source0  : https://sourceforge.net/projects/freeglut/files/freeglut/3.2.2/freeglut-3.2.2.tar.gz
 Summary  : A freely licensed and improved alternative to the GLUT library
@@ -54,6 +54,15 @@ Group: Default
 license components for the freeglut package.
 
 
+%package staticdev
+Summary: staticdev components for the freeglut package.
+Group: Default
+Requires: freeglut-dev = %{version}-%{release}
+
+%description staticdev
+staticdev components for the freeglut package.
+
+
 %prep
 %setup -q -n freeglut-3.2.2
 cd %{_builddir}/freeglut-3.2.2
@@ -63,7 +72,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1656110852
+export SOURCE_DATE_EPOCH=1662693771
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -83,10 +92,10 @@ export GCC_IGNORE_WERROR=1
 export AR=gcc-ar
 export RANLIB=gcc-ranlib
 export NM=gcc-nm
-export CFLAGS="$CFLAGS -O3 -Wl,-z,x86-64-v3 -ffat-lto-objects -flto=auto -march=x86-64-v3 -msse2avx -mtune=skylake "
-export FCFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v3 -ffat-lto-objects -flto=auto -march=x86-64-v3 -msse2avx -mtune=skylake "
-export FFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v3 -ffat-lto-objects -flto=auto -march=x86-64-v3 -msse2avx -mtune=skylake "
-export CXXFLAGS="$CXXFLAGS -O3 -Wl,-z,x86-64-v3 -ffat-lto-objects -flto=auto -march=x86-64-v3 -msse2avx -mtune=skylake "
+export CFLAGS="$CFLAGS -O3 -Wl,-z,x86-64-v3 -ffat-lto-objects -flto=auto -march=x86-64-v3 -mtune=skylake "
+export FCFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v3 -ffat-lto-objects -flto=auto -march=x86-64-v3 -mtune=skylake "
+export FFLAGS="$FFLAGS -O3 -Wl,-z,x86-64-v3 -ffat-lto-objects -flto=auto -march=x86-64-v3 -mtune=skylake "
+export CXXFLAGS="$CXXFLAGS -O3 -Wl,-z,x86-64-v3 -ffat-lto-objects -flto=auto -march=x86-64-v3 -mtune=skylake "
 export CFLAGS="$CFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
 export CXXFLAGS="$CXXFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
 export FFLAGS="$FFLAGS -march=x86-64-v3 -m64 -Wl,-z,x86-64-v3"
@@ -96,10 +105,10 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1656110852
+export SOURCE_DATE_EPOCH=1662693771
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/freeglut
-cp %{_builddir}/freeglut-3.2.2/COPYING %{buildroot}/usr/share/package-licenses/freeglut/952348c4126a5946c98385d2fe5a4801735f174d
+cp %{_builddir}/freeglut-%{version}/COPYING %{buildroot}/usr/share/package-licenses/freeglut/952348c4126a5946c98385d2fe5a4801735f174d
 pushd clr-build-avx2
 %make_install_v3  || :
 popd
@@ -122,12 +131,12 @@ popd
 /usr/lib64/cmake/FreeGLUT/FreeGLUTConfigVersion.cmake
 /usr/lib64/cmake/FreeGLUT/FreeGLUTTargets-relwithdebinfo.cmake
 /usr/lib64/cmake/FreeGLUT/FreeGLUTTargets.cmake
+/usr/lib64/glibc-hwcaps/x86-64-v3/libglut.so
 /usr/lib64/libglut.so
 /usr/lib64/pkgconfig/glut.pc
 
 %files lib
 %defattr(-,root,root,-)
-/usr/lib64/glibc-hwcaps/x86-64-v3/libglut.so
 /usr/lib64/glibc-hwcaps/x86-64-v3/libglut.so.3
 /usr/lib64/glibc-hwcaps/x86-64-v3/libglut.so.3.11.1
 /usr/lib64/libglut.so.3
@@ -136,3 +145,7 @@ popd
 %files license
 %defattr(0644,root,root,0755)
 /usr/share/package-licenses/freeglut/952348c4126a5946c98385d2fe5a4801735f174d
+
+%files staticdev
+%defattr(-,root,root,-)
+/usr/lib64/glibc-hwcaps/x86-64-v3/libglut.a
