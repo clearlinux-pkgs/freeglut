@@ -5,7 +5,7 @@
 #
 Name     : freeglut
 Version  : 3.4.0
-Release  : 29
+Release  : 30
 URL      : https://sourceforge.net/projects/freeglut/files/freeglut/3.4.0/freeglut-3.4.0.tar.gz
 Source0  : https://sourceforge.net/projects/freeglut/files/freeglut/3.4.0/freeglut-3.4.0.tar.gz
 Summary  : A freely licensed and improved alternative to the GLUT library
@@ -62,7 +62,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1682965286
+export SOURCE_DATE_EPOCH=1685504623
 mkdir -p clr-build
 pushd clr-build
 export GCC_IGNORE_WERROR=1
@@ -95,7 +95,7 @@ make  %{?_smp_mflags}
 popd
 
 %install
-export SOURCE_DATE_EPOCH=1682965286
+export SOURCE_DATE_EPOCH=1685504623
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/freeglut
 cp %{_builddir}/freeglut-%{version}/COPYING %{buildroot}/usr/share/package-licenses/freeglut/952348c4126a5946c98385d2fe5a4801735f174d || :
@@ -112,7 +112,6 @@ popd
 
 %files dev
 %defattr(-,root,root,-)
-/V3/usr/lib64/libglut.so
 /usr/include/GL/freeglut.h
 /usr/include/GL/freeglut_ext.h
 /usr/include/GL/freeglut_std.h
@@ -127,7 +126,6 @@ popd
 
 %files lib
 %defattr(-,root,root,-)
-/V3/usr/lib64/libglut.so.3
 /V3/usr/lib64/libglut.so.3.12.0
 /usr/lib64/libglut.so.3
 /usr/lib64/libglut.so.3.12.0
