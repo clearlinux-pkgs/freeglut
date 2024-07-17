@@ -1,0 +1,1 @@
+ln -s glut.pc %{buildroot}/usr/lib64/pkgconfig/freeglut.pc
